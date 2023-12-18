@@ -67,7 +67,7 @@ export default function Login() {
             onChange={(event) => handleChange("password", event.target.value)}
             value={enterValues.password}
           />
-           <div className="control-error">
+          <div className="control-error">
             {passwordIsInvalid && <p>password must have 6 characters</p>}
           </div>
         </div>
@@ -75,7 +75,12 @@ export default function Login() {
 
       <p className="form-actions">
         <button className="button button-flat">Reset</button>
-        <button disabled={emailIsInvalid || passwordIsInvalid} className="button">Login</button>
+        <button
+          disabled={emailIsInvalid || passwordIsInvalid}
+          className="button"
+        >
+          Login
+        </button>
       </p>
     </form>
   );
