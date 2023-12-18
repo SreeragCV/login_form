@@ -13,8 +13,18 @@ export default function Login() {
     password: false,
   });
 
-  const emailIsInvalid = didEdit.email && !isEmail(enterValues.email) && isNotEmpty(enterValues.email)
-  const passwordIsInvalid = didEdit.password && !hasMinLength(enterValues.password, 6)
+  const emailIsInvalid =
+    didEdit.email &&
+    !isEmail(enterValues.email) &&
+    isNotEmpty(enterValues.email);
+  const passwordIsInvalid =
+    didEdit.password && !hasMinLength(enterValues.password, 6);
+
+  const ifDisable =
+    enterValues.email === "" ||
+    enterValues.password === "" ||
+    emailIsInvalid ||
+    passwordIsInvalid;
 
   function handleChange(identifier, value) {
     setEnteredValues((prevValues) => ({
@@ -70,10 +80,10 @@ export default function Login() {
       </div>
 
       <p className="form-actions">
-        <button className="button button-flat">Reset</button>
+        <button type="reset" className="button button-flat">Reset</button>
         <button
-          disabled={emailIsInvalid || passwordIsInvalid}
-          className={emailIsInvalid || passwordIsInvalid ? "disabled" : "button"}
+          disabled={ifDisable}
+          className={ifDisable ? "disabled" : "button"}
         >
           Login
         </button>
