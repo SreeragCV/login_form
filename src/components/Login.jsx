@@ -6,16 +6,35 @@ export default function Login() {
     password: "",
   });
 
+  const [didEdit, setDidEdit] = useState({
+    email: false,
+    password: false,
+  });
+
+  const emailIsInvalid = didEdit.email && !enterValues.email.includes("@");
+  const passwordIsInvalid = didEdit.password && enterValues.password.length < 6;
+
   function handleChange(identifier, value) {
     setEnteredValues((prevValues) => ({
       ...prevValues,
       [identifier]: value,
+    }));
+    setDidEdit((prevEdit) => ({
+      ...prevEdit,
+      [identifier]: false,
     }));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(enterValues);
+  }
+
+  function handleInputBlur(identifier) {
+    setDidEdit((prevEdit) => ({
+      ...prevEdit,
+      [identifier]: true,
+    }));
   }
 
   return (
@@ -29,8 +48,13 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
+            onBlur={() => handleInputBlur("email")}
             onChange={(event) => handleChange("email", event.target.value)}
+            value={enterValues.email}
           />
+          <div className="control-error">
+            {emailIsInvalid && <p>please enter a valid email address</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
@@ -39,14 +63,19 @@ export default function Login() {
             id="password"
             type="password"
             name="password"
+            onBlur={() => handleInputBlur("password")}
             onChange={(event) => handleChange("password", event.target.value)}
+            value={enterValues.password}
           />
+           <div className="control-error">
+            {passwordIsInvalid && <p>password must have 6 characters</p>}
+          </div>
         </div>
       </div>
 
       <p className="form-actions">
         <button className="button button-flat">Reset</button>
-        <button className="button">Login</button>
+        <button disabled={emailIsInvalid || passwordIsInvalid} className="button">Login</button>
       </p>
     </form>
   );
