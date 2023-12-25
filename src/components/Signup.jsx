@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
   const [passwordNotMatch, setPasswordNotMatch] = useState(false);
+  const navigate = useNavigate()
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -17,8 +19,8 @@ export default function Signup() {
     }
 
     setPasswordNotMatch(false)
-
-    console.log(data);
+    
+    navigate("/login")
   }
 
   return (
